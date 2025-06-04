@@ -1,5 +1,6 @@
 import React from 'react';
 import BottomNav, { consumerNavItems } from '@/components/layout/BottomNav'; // Import BottomNav and specific nav items
+import Footer from '@/components/layout/Footer'; // Import Footer
 
 // Placeholder components - these would be actual components from src/components/layout/
 const ConsumerHeaderPlaceholder = () => ( // This would eventually be replaced by the global Header or a variant
@@ -33,6 +34,7 @@ export default function ConsumerLayout({
         {children}
       </main>
       <BottomNav navItems={consumerNavItems} />
+      <Footer /> {/* Adding Footer component */}
       {/* The global Footer from root layout will be used. */}
     </div>
   );

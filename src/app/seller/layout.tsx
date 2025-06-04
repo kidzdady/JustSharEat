@@ -1,5 +1,6 @@
 import React from 'react';
 import BottomNav, { sellerNavItems } from '@/components/layout/BottomNav'; // Import BottomNav and specific nav items
+import Footer from '@/components/layout/Footer';
 
 // Placeholder components - these would be actual components from src/components/layout/
 const SellerHeaderPlaceholder = () => ( // This would eventually be replaced by the global Header or a variant
@@ -29,6 +30,7 @@ export default function SellerLayout({
         {children}
       </main>
       <BottomNav navItems={sellerNavItems} />
+      <Footer />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import BottomNav, { ngoNavItems } from '@/components/layout/BottomNav'; // Import BottomNav and specific nav items
+import Footer from '@/components/layout/Footer';
 
 // Placeholder components
 const NgoHeaderPlaceholder = () => ( // This would eventually be replaced by the global Header or a variant
@@ -29,6 +30,7 @@ export default function NgoLayout({
         {children}
       </main>
       <BottomNav navItems={ngoNavItems} />
+      <Footer />
     </div>
   );
 }

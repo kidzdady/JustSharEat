@@ -26,10 +26,12 @@ import {
   Users
 } from 'lucide-react';
 import { LanguageProvider, useLanguage } from '@/context/LanguageContext';
+import { useAuth } from '@/context/AuthContext';
 
 function ProfilePage() {
   const { lang, setLang, t } = useLanguage();
   const profileT = t.profile;
+  const { currentUser } = useAuth();
   const [activeTab, setActiveTab] = useState('overview');
   const [isEditing, setIsEditing] = useState(false);
   const [showImageUpload, setShowImageUpload] = useState(false);
@@ -42,8 +44,24 @@ function ProfilePage() {
     urgent: true
   });
 
-  // Mock user data
-  const [userData, setUserData] = useState({
+  // Use real user data if logged in, else fallback to mock
+  const userData = currentUser ? {
+    name: currentUser.displayName || 'No Name',
+    email: currentUser.email || '',
+    phone: currentUser.phoneNumber || '',
+    joinDate: currentUser.metadata?.creationTime ? new Date(currentUser.metadata.creationTime).toLocaleDateString() : '',
+    bio: '',
+    avatar: currentUser.photoURL
+      ? <img src={currentUser.photoURL} alt="avatar" className="w-32 h-32 rounded-full object-cover" />
+      : '👤',
+    verified: true,
+    donationGoal: 5000,
+    currentDonations: 3240,
+    mealsShared: 127,
+    impactScore: 850,
+    address: '', // Not available from Firebase user
+  } : {
+    // Mock user data
     name: 'Sarah Johnson',
     email: 'sarah.johnson@email.com',
     phone: '+1 (555) 123-4567',
@@ -56,9 +74,7 @@ function ProfilePage() {
     currentDonations: 3240,
     mealsShared: 127,
     impactScore: 850
-  });
-
-  const [formData, setFormData] = useState(userData);
+  };
 
   // Mock donation history
   const donationHistory = [
@@ -83,12 +99,10 @@ function ProfilePage() {
   ];
 
   const handleSave = () => {
-    setUserData(formData);
     setIsEditing(false);
   };
 
   const handleCancel = () => {
-    setFormData(userData);
     setIsEditing(false);
   };
 
@@ -222,63 +236,61 @@ function ProfilePage() {
                   Personal Information
                 </h2>
                 
-                {isEditing ? (
+                {isEditing && !currentUser ? (
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
                       <input
                         type="text"
-                        value={formData.name}
-                        onChange={(e) => setFormData({...formData, name: e.target.value})}
+                        value={userData.name}
+                        onChange={() => {}}
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                        readOnly
                       />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
                       <input
                         type="email"
-                        value={formData.email}
-                        onChange={(e) => setFormData({...formData, email: e.target.value})}
+                        value={userData.email}
+                        onChange={() => {}}
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                        readOnly
                       />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">Phone</label>
                       <input
                         type="tel"
-                        value={formData.phone}
-                        onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                        value={userData.phone}
+                        onChange={() => {}}
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                        readOnly
                       />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">Address</label>
                       <input
                         type="text"
-                        value={formData.address}
-                        onChange={(e) => setFormData({...formData, address: e.target.value})}
+                        value={userData.address}
+                        onChange={() => {}}
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                        readOnly
                       />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">Bio</label>
                       <textarea
-                        value={formData.bio}
-                        onChange={(e) => setFormData({...formData, bio: e.target.value})}
+                        value={userData.bio}
+                        onChange={() => {}}
                         rows={3}
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                        readOnly
                       />
                     </div>
                     <div className="flex space-x-3">
                       <button
-                        onClick={handleSave}
-                        className="flex-1 bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2"
-                      >
-                        <Save className="w-4 h-4" />
-                        <span>Save Changes</span>
-                      </button>
-                      <button
-                        onClick={handleCancel}
+                        onClick={() => setIsEditing(false)}
                         className="flex-1 bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2"
                       >
                         <X className="w-4 h-4" />

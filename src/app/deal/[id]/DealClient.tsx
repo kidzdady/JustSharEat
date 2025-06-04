@@ -66,8 +66,6 @@ interface DealClientProps {
 }
 
 export function DealClient({ deal }: DealClientProps) {
-  const [showAuthModal, setShowAuthModal] = useState<null | 'login' | 'signup'>(null);
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-orange-50 via-yellow-50 to-white">
       {/* Header */}
@@ -90,52 +88,19 @@ export function DealClient({ deal }: DealClientProps) {
           <div className="flex items-center gap-2">
             <button
               className="px-4 py-1 rounded-full border border-orange-300 text-orange-600 font-semibold bg-white hover:bg-orange-50 transition-colors"
-              onClick={() => setShowAuthModal('login')}
+              onClick={() => window.location.href = '/auth'}
             >
               Log In
             </button>
             <button
               className="px-4 py-1 rounded-full border border-orange-500 text-white font-semibold bg-orange-500 hover:bg-orange-600 transition-colors"
-              onClick={() => setShowAuthModal('signup')}
+              onClick={() => window.location.href = '/auth'}
             >
               Sign Up
             </button>
           </div>
         </div>
       </header>
-
-      {/* Auth Modal */}
-      {showAuthModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-white rounded-2xl shadow-xl p-8 max-w-sm w-full text-center relative">
-            <button
-              className="absolute top-3 right-3 text-gray-400 hover:text-gray-600 text-2xl font-bold"
-              onClick={() => setShowAuthModal(null)}
-              aria-label="Close"
-            >
-              ×
-            </button>
-            <h2 className="text-2xl font-bold mb-4">{showAuthModal === 'login' ? 'Log In' : 'Sign Up'}</h2>
-            <p className="text-gray-600 mb-6">This is a static demo. Authentication is not available on static pages.</p>
-            <button
-              className="w-full flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-xl transition-all mb-3"
-              onClick={() => {
-                setShowAuthModal(null);
-                window.location.href = '/consumer';
-              }}
-            >
-              <svg className="w-5 h-5" viewBox="0 0 48 48"><g><path fill="#4285F4" d="M44.5 20H24v8.5h11.7C34.7 33.9 30.1 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 6 .9 8.3 2.7l6.2-6.2C34.2 4.5 29.4 3 24 3 12.4 3 3 12.4 3 24s9.4 21 21 21c10.5 0 20-7.5 20-21 0-1.3-.1-2.7-.5-4z"/><path fill="#34A853" d="M6.3 14.7l7 5.1C15.5 16.1 19.4 13 24 13c3.1 0 6 .9 8.3 2.7l6.2-6.2C34.2 4.5 29.4 3 24 3c-7.2 0-13 5.8-13 13 0 2.2.5 4.3 1.3 6.2z"/><path fill="#FBBC05" d="M24 45c5.1 0 9.8-1.7 13.4-4.7l-6.2-5.1C29.9 36.1 27.1 37 24 37c-6.1 0-10.7-3.1-11.7-7.5l-7 5.4C7.9 42.2 15.4 45 24 45z"/><path fill="#EA4335" d="M44.5 20H24v8.5h11.7c-1.2 3.2-4.7 5.5-8.7 5.5-5.1 0-9.3-4.2-9.3-9.5s4.2-9.5 9.3-9.5c2.6 0 5 .9 6.8 2.6l6.2-6.2C34.2 4.5 29.4 3 24 3c-7.2 0-13 5.8-13 13s5.8 13 13 13c5.1 0 9.3-4.2 9.3-9.5 0-.7-.1-1.4-.2-2z"/></g></svg>
-              {showAuthModal === 'login' ? 'Sign In with Google' : 'Sign Up with Google'}
-            </button>
-            <button
-              className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-xl transition-all"
-              onClick={() => setShowAuthModal(null)}
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
 
       <main className="container mx-auto px-4 py-6 max-w-6xl">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
