@@ -69,3 +69,4 @@ build
 
 # Optional Svelte files
 .svelte-kit/
+.vercel
