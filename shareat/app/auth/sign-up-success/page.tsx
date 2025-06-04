@@ -1,10 +1,10 @@
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+  CardDescription,
+} from "../../../src/components/ui/card";
 
 export default function Page() {
   return (

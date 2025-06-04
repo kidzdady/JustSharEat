@@ -1,34 +1,21 @@
-import React from 'react';
+import * as React from "react";
 
-interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-  // No specific variants for now, can be extended later if needed
-  // e.g., withPadding?: boolean;
-  // e.g., interactive?: boolean;
-}
+import { cn } from "@/lib/utils";
 
-const Card = React.forwardRef<HTMLDivElement, CardProps>(
-  ({ className, ...props }, ref) => {
-    // Base styles for the card
-    const baseStyles =
-      'rounded-lg border bg-surface text-text-primary shadow-sm';
-    // Example of interactive styles (can be made conditional with a prop)
-    // const interactiveStyles = 'transition-all hover:shadow-md';
-
-    const combinedClassName = [
-        baseStyles,
-        // interactive ? interactiveStyles : '',
-        className
-    ]
-      .filter(Boolean)
-      .join(' ');
-
-    return <div ref={ref} className={combinedClassName} {...props} />;
-  }
-);
-Card.displayName = 'Card';
-
-// Optional: CardHeader, CardContent, CardFooter components for structure
-// These can be simple divs with some default padding/styling
+const Card = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn(
+      "rounded-xl border bg-card text-card-foreground shadow",
+      className,
+    )}
+    {...props}
+  />
+));
+Card.displayName = "Card";
 
 const CardHeader = React.forwardRef<
   HTMLDivElement,
@@ -36,43 +23,43 @@ const CardHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={['flex flex-col space-y-1.5 p-6', className].filter(Boolean).join(' ')}
+    className={cn("flex flex-col space-y-1.5 p-6", className)}
     {...props}
   />
 ));
-CardHeader.displayName = 'CardHeader';
+CardHeader.displayName = "CardHeader";
 
 const CardTitle = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLHeadingElement>
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <h3
+  <div
     ref={ref}
-    className={['text-2xl font-semibold leading-none tracking-tight font-display', className].filter(Boolean).join(' ')}
+    className={cn("font-semibold leading-none tracking-tight", className)}
     {...props}
   />
 ));
-CardTitle.displayName = 'CardTitle';
+CardTitle.displayName = "CardTitle";
 
 const CardDescription = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <p
+  <div
     ref={ref}
-    className={['text-sm text-text-secondary', className].filter(Boolean).join(' ')}
+    className={cn("text-sm text-muted-foreground", className)}
     {...props}
   />
 ));
-CardDescription.displayName = 'CardDescription';
+CardDescription.displayName = "CardDescription";
 
 const CardContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={['p-6 pt-0', className].filter(Boolean).join(' ')} {...props} />
+  <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />
 ));
-CardContent.displayName = 'CardContent';
+CardContent.displayName = "CardContent";
 
 const CardFooter = React.forwardRef<
   HTMLDivElement,
@@ -80,11 +67,17 @@ const CardFooter = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={['flex items-center p-6 pt-0', className].filter(Boolean).join(' ')}
+    className={cn("flex items-center p-6 pt-0", className)}
     {...props}
   />
 ));
-CardFooter.displayName = 'CardFooter';
+CardFooter.displayName = "CardFooter";
 
-export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter };
-export type { CardProps };
+export {
+  Card,
+  CardHeader,
+  CardFooter,
+  CardTitle,
+  CardDescription,
+  CardContent,
+};
