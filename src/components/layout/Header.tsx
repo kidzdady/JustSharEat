@@ -33,7 +33,7 @@ const CartIcon = () => (
 // Mock authentication status is no longer needed
 
 export default function Header() {
-  const { currentUser, loading, logout } = useAuth();
+  const { currentUser, loading } = useAuth();
   const router = useRouter();
   const [search, setSearch] = useState('');
   const [mobileSearch, setMobileSearch] = useState('');
