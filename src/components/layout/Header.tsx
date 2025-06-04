@@ -8,7 +8,6 @@ import LanguageToggle from './LanguageToggle';
 import { useAuth } from '@/context/AuthContext'; // Restore useAuth
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { signOutUser } from '@/lib/api/auth';
 import { useCart } from '@/context/CartContext';
 import { Modal } from '@/components/ui/Modal';
 import { consumerNavItems, sellerNavItems, ngoNavItems } from './BottomNav';
@@ -33,7 +32,7 @@ const CartIcon = () => (
 // Mock authentication status is no longer needed
 
 export default function Header() {
-  const { currentUser, loading } = useAuth();
+  const { currentUser, loading, signOut } = useAuth();
   const router = useRouter();
   const [search, setSearch] = useState('');
   const [mobileSearch, setMobileSearch] = useState('');
@@ -54,10 +53,9 @@ export default function Header() {
         return '/';
     }
   };
-
   const handleSignOut = async () => {
     try {
-      await signOutUser();
+      await signOut();
       router.push('/auth');
     } catch (error) {
       console.error('Error signing out:', error);
@@ -113,8 +111,7 @@ export default function Header() {
           <form className="relative w-full" onSubmit={handleSearch}>
             <Input
               type="search"
-              value={search}
-              onChange={e => setSearch(e.target.value)}
+              value={search}              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
               placeholder="Search for deals, restaurants, or items..."
               className="pl-10 pr-4 py-2.5 rounded-lg border-border focus:border-primary"
             />
@@ -166,11 +163,10 @@ export default function Header() {
       </div>
       {/* Search Bar (mobile) - Appears below header */}
       <div className="md:hidden px-4 pb-3 border-b border-border">
-        <form className="relative w-full" onSubmit={handleMobileSearch}>
-          <Input
+        <form className="relative w-full" onSubmit={handleMobileSearch}>          <Input
             type="search"
             value={mobileSearch}
-            onChange={e => setMobileSearch(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setMobileSearch(e.target.value)}
             placeholder="Search..."
             className="pl-10 pr-4 py-2 rounded-lg border-border focus:border-primary"
           />

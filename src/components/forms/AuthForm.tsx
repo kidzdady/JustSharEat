@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { signInWithGoogle } from '@/lib/api/auth'; // Using our centralized auth function
 import { useAuth } from '@/context/AuthContext';

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 // Assuming DropdownMenu components are available from a file like '@/components/ui/DropdownMenu'
 // If not, these would need to be created or imported from a library.
 // For this example, I'll use a simple button toggle.

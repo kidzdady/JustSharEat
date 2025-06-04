@@ -17,6 +17,7 @@ export interface AppUser extends FirebaseUser {
 interface AuthContextType {
   currentUser: AppUser | null;
   loading: boolean;
+  signOut: () => Promise<void>;
   // --- Temporary for UI simulation ---
   simulateLogin: (mockUser: AppUser) => void;
   simulateLogout: () => void;
@@ -85,14 +86,37 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
   // --- End Temporary ---
 
+  const signOut = async () => {
+    if (!auth) {
+      console.warn("Firebase auth is not initialized. Cannot sign out.");
+      return;
+    }
+    await auth.signOut();
+    setCurrentUser(null);
+  };
+
   const value = {
     currentUser,
     loading,
+    signOut,
     simulateLogin, // Temporary
     simulateLogout, // Temporary
   };
 
-  return <AuthContext.Provider value={value}>{!loading && children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider 
+      value={{
+        currentUser,
+        loading,
+        signOut,
+        // --- Temporary ---
+        simulateLogin: (mockUser) => setCurrentUser(mockUser),
+        simulateLogout: () => setCurrentUser(null),
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export const useAuth = (): AuthContextType => {

@@ -1,11 +1,11 @@
-'use client'; // For using hooks like useSearchParams
+'use client';
 
-import { Button } from '@/components/ui/Button';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
-import { Input } from '@/components/ui/Input';
-import { Label } from '@/components/ui/Label';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/RadioGroup';
-import { Checkbox } from '@/components/ui/Checkbox';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Checkbox } from '@/components/ui/checkbox';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -306,7 +306,7 @@ function CheckoutPage() {
                           <select 
                             id="ngo-select" 
                             value={selectedNGO}
-                            onChange={(e) => setSelectedNGO(e.target.value)}
+                            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedNGO(e.target.value)}
                             className="w-full p-2 border border-red-300 rounded-md bg-white focus:ring-2 focus:ring-red-500 focus:border-red-500"
                           >
                             <option value="auto-match">Auto-Match to Needy</option>
@@ -327,7 +327,7 @@ function CheckoutPage() {
                     <Input 
                       id="pickup-notes" 
                       value={pickupNotes}
-                      onChange={(e) => setPickupNotes(e.target.value)}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPickupNotes(e.target.value)}
                       placeholder="e.g., I'm wearing a red cap, I'll be at the main entrance"
                       className="w-full"
                     />
@@ -385,7 +385,7 @@ function CheckoutPage() {
                               id="mpesa-number"
                               type="tel"
                               value={mpesaNumber}
-                              onChange={(e) => setMpesaNumber(e.target.value)}
+                              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setMpesaNumber(e.target.value)}
                               placeholder="+254XXXXXXXXX"
                               className="w-full"
                             />
